@@ -6,7 +6,7 @@ Waits for a Twitch streamer to go live, then downloads their VOD. There's probab
 
 - Download the [Python 3.10](https://www.python.org/downloads/)
 - Clone the repo & navigate to the dir
-    - `git clone https://github.com/skend/<name_here>`
+    - `git clone https://github.com/skend/backup_twitch_vods.git`
     - `cd backup_twitch_vods`
 - Install the required dependencies
     - `pip install -r requirements.txt`
@@ -16,7 +16,7 @@ Waits for a Twitch streamer to go live, then downloads their VOD. There's probab
         auth = 'Bearer 8uossvabcdefgh123456tblte5i25w'
         client_id = 't2ujbhtfvabcdefgh123456xz3yiuk'
         ```
-- Run `python backup_twitch_vods.py -h" to see how to run
+- Run `python backup_twitch_vods.py -h` to see how to run
 
 
 ```

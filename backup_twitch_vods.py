@@ -5,6 +5,7 @@ import youtube_dl
 import argparse
 import log
 import my_secrets
+from datetime import datetime
 
 
 def is_live(username : str):
@@ -27,8 +28,9 @@ def is_live(username : str):
 
 
 def download_vod(username : str, directory : str):
+    date_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     ydl_opts = {
-        'outtmpl': f'{directory}/%(release_date)s_%(channel)s_%(id)s.%(ext)s',
+        'outtmpl': f'{directory}/{date_str}_{username}_%(id)s.%(ext)s',
         'quiet': True
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
