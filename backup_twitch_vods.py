@@ -72,7 +72,7 @@ def get_youtube_category(youtube):
 
     category = input('Enter the number of the category you wish to upload VODs under: ')
     cls()
-    
+
     return category
 
 
@@ -86,7 +86,7 @@ def auth_with_youtube():
     return googleapiclient.discovery.build("youtube", "v3", credentials=credentials)
 
 
-def upload_to_youtube(youtube, vod_path, category, stream_data):
+def upload_to_youtube(youtube, vod_path, stream_data):
     request = youtube.videos().insert(
         part="snippet,status",
         body={
@@ -98,7 +98,7 @@ def upload_to_youtube(youtube, vod_path, category, stream_data):
               stream_data['game_name'],
               stream_data['title']
             ],
-            "categoryId": str(category)
+            "categoryId": "20" # gaming in US
           },
           "status": {
             "privacyStatus": "private"
@@ -129,19 +129,16 @@ if __name__ == "__main__":
                         datefmt='%Y-%m-%dT%H:%M:%S', level=logging.INFO)
 
     youtube = None
-    category = None
     if args.youtube:
         youtube = auth_with_youtube()
-        category = get_youtube_category(youtube)
-        print(category)
 
+    logging.info(f"Waiting for {args.username} to turn the stream on")
     while (True):
-        logging.info(f"Waiting for {args.username} to turn the stream on")
         if not is_live(args.username):
             time.sleep(args.polling_rate)
             continue
         stream_data = get_stream_info(args.username)['data'][0]
         vod_path = download_vod(args.username, args.directory, stream_data)
         if args.youtube:
-            upload_to_youtube(youtube, vod_path, category, stream_data)
+            upload_to_youtube(youtube, vod_path, stream_data)
         time.sleep(60)
